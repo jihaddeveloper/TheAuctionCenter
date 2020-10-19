@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title layout:tittle-pattern="$CONTENT_TITLE $DECORATOR_TITLE"> :: The Auction Center</title>
+  </head>
+  <body>
+  	<header>
+  		<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>                        
+			      </button>
+			      <a class="navbar-brand" href="/index" th:href="@{/}">
+			      	<img src="/img/lg1.png" width="150" height="31">
+			      </a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="myNavbar">
+			      <ul class="nav navbar-nav">
+			        <li class="active"><a href="/" th:href="@{/}">Home</a></li>
+			        <li class="dropdown">
+			          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown<span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+			            <li><a href="#">A</a></li>
+			            <li><a href="#">B</a></li>
+			            <li><a href="#">C</a></li>
+			          </ul>
+			        </li>
+			        <li class="nav-item" sec:authorize="isAuthenticated()"><a href="/register">Registration</a></li>
+			        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')"><a href="/users">Users</a></li>
+			        <li class="nav-item" sec:authorize="isAuthenticated()"><a href="/profile">Profile</a></li>
+			        <li class="nav-item" sec:authorize="!isAuthenticated()"><a href="/login">Login</a></li>
+			        <li class="nav-item"><a href="/signup">Signup</a></li>
+			        <li class="nav-item"><a href="/">About Us</a></li>
+			        
+			        <li class="nav-item" sec:authorize="isAuthenticated()">
+			        <form th:action="@{/logout}" method="post">
+			        	<button type="submit" onclick="">Logout</button>
+			        </form>
+			        </li>
+			      </ul>
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="#" data-toggle="modal" data-target="#signup"><span class="glyphicon glyphicon-user" ></span> Sign Up</a></li>
+			        <li><a href="#" data-toggle="modal" data-target="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			      </ul>
+
+			    </div>
+			  </div>
+			</nav>
+	</header>	
+
+	<div layout:fragment="content">
+    <!-- Content Files -->
+    </div>
+
+	 <!-- Modal For Log In Process--> 	
+	<div id="login" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Sign In</h4>
+	      </div>
+	      <div class="modal-body">
+	      <div class="panel panel-primary">
+	      	<div class="panel-body">
+	      		<form id="loginform" class="form-horizontal" role="form">                        
+	            <div style="margin-bottom: 25px" class="input-group">
+	                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	                <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="username or email">      
+	            </div>
+	                
+	            <div style="margin-bottom: 25px" class="input-group">
+	                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+	                <input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+	            </div>
+	            <div class="input-group">
+	              <div class="checkbox">
+	                <label>
+	                  <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+	                </label>
+	              </div>
+	            </div>
+	            <div style="margin-top:10px" class="form-group">
+	            	<div class="col-sm-12 controls">
+	                  <a id="btn-login" href="#" class="btn btn-success">Login  </a>
+	                  <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+	              	</div>
+	            </div>
+	            <div class="form-group">
+		            <div class="col-md-12 control">
+		                <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+		                    Don't have an account! 
+		                <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+		                    Sign Up Here
+		                </a>
+		                </div>
+		            </div>
+	            </div>    
+	            </form> 
+	        </div>
+	    </div>
+		</div>
+	    <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	</div>
+	</div>
+
+	<!-- Modal For SignUp Process--> 
+	<div id="signup" class="modal fade" role="dialog">
+	  <div class="modal-dialog ">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Sign Up</h4>
+	      </div>
+	      <div class="modal-body">
+	      <div class="panel panel-primary">
+	      
+	      <div class="panel-body">
+	      <form action="/SendEmail" method="post">
+	      	<input type="text" name="name" placeholder="Your name">
+	      	<input type="email" name="email" placeholder="Email  ex. example@something.com">
+	      	<button type="submit" class="btn btn-info">Sign Up</button>
+	      </form>
+	      </div>
+	   
+	  	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+
+	<!-- FOOTER -->
+      <!-- <footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2018 The Auction Center. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer> -->
+	<footer class="page-footer font-small blue">
+		<div class="footer-copyright text-center py-3">© Copyright 2018 | <a href="#">BiMeeAuction</a></div>
+	</footer>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/header_footer">
+<head>
+<title>SignUp Page</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="container">
+		 <fieldset>
+	      <form action="/SendEmail" method="post">
+	      	<input type="text" name="name" placeholder="Your name" required="required">
+	      	<input type="email" name="email" placeholder="Email  ex. example@something.com" required="required">
+	      	<button type="submit" class="btn btn-info">Sign Up</button>
+	      </form>
+	      </fieldset>
+		</div>
+	</div>
+
+</body>
+</html>
